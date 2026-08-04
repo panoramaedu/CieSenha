@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07171d">
+<meta name="description" content="CiêSenha — o wordle da ciência. Decifre a palavra do dia e aprenda a explicação do conceito.">
+<title>CiêSenha · o wordle da ciência</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Unbounded:wght@500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="ambient" aria-hidden="true">
+  <div class="glow g1"></div><div class="glow g2"></div>
+  <svg class="mol m1" viewBox="0 0 120 120"><line x1="20" y1="80" x2="60" y2="30"/><line x1="60" y1="30" x2="100" y2="70"/><circle cx="20" cy="80" r="7"/><circle cx="60" cy="30" r="9"/><circle cx="100" cy="70" r="6"/></svg>
+  <svg class="mol m2" viewBox="0 0 120 120"><line x1="30" y1="30" x2="90" y2="90"/><line x1="90" y1="90" x2="90" y2="30"/><circle cx="30" cy="30" r="8"/><circle cx="90" cy="90" r="7"/></svg>
+  <svg class="mol m3" viewBox="0 0 120 120"><line x1="20" y1="60" x2="60" y2="60"/><line x1="60" y1="60" x2="100" y2="30"/><line x1="60" y1="60" x2="90" y2="100"/><circle cx="20" cy="60" r="6"/><circle cx="60" cy="60" r="9"/><circle cx="100" cy="30" r="6"/><circle cx="90" cy="100" r="5"/></svg>
+  <span class="bub" style="left:8%;width:10px;height:10px;animation-duration:19s"></span>
+  <span class="bub" style="left:22%;width:6px;height:6px;animation-duration:26s;animation-delay:-9s"></span>
+  <span class="bub" style="left:55%;width:13px;height:13px;animation-duration:23s;animation-delay:-4s"></span>
+  <span class="bub" style="left:71%;width:7px;height:7px;animation-duration:30s;animation-delay:-16s"></span>
+  <span class="bub" style="left:88%;width:11px;height:11px;animation-duration:21s;animation-delay:-12s"></span>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- ============ JOGO ============ -->
+<div class="wrap">
+<header>
+  <a href="index.html" class="logo" title="Voltar à tela inicial">
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <g stroke="#58d5e0" stroke-width="1.6" fill="none" opacity=".9">
+        <ellipse cx="32" cy="32" rx="27" ry="11"/>
+        <ellipse cx="32" cy="32" rx="27" ry="11" transform="rotate(60 32 32)"/>
+        <ellipse cx="32" cy="32" rx="27" ry="11" transform="rotate(-60 32 32)"/>
+      </g>
+      <circle class="nuc" cx="32" cy="32" r="5.5" fill="#ffb454"/>
+      <g class="orb"><circle cx="59" cy="32" r="3" fill="#58d5e0"/></g>
+      <g class="orb orb2"><circle cx="32" cy="5" r="2.4" fill="#2fe6a6"/></g>
+    </svg>
+    <span>
+      <h1>Ciê<em>Senha</em></h1>
+      <p>o wordle da ciência</p>
+    </span>
+  </a>
+  <div class="hbtns">
+    <button class="iconbtn" id="bProf" aria-label="Modo Professor" title="Modo Professor">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 3.5 1.8 8.6l10.2 5.1 8.2-4.1v4.6h1.6V8.6L12 3.5z"/><path d="M5.4 12.4v3.2c0 1.9 3 3.4 6.6 3.4s6.6-1.5 6.6-3.4v-3.2l-6.6 3.3-6.6-3.3z"/></svg>
+    </button>
+    <button class="iconbtn" id="bStats" aria-label="Estatísticas">
+      <svg viewBox="0 0 24 24"><rect x="4" y="12" width="4" height="9" rx="1"/><rect x="10" y="6" width="4" height="15" rx="1"/><rect x="16" y="9" width="4" height="12" rx="1"/></svg>
+    </button>
+    <button class="iconbtn" id="bHelp" aria-label="Como jogar">?</button>
+  </div>
+</header>
+
+<div class="stages" id="stages" aria-label="Etapa de ensino"></div>
+<div class="subbar" id="subbar"></div>
+
+<main>
+  <div id="board" role="grid" aria-label="Tabuleiro do jogo"></div>
+  <div id="kb"></div>
+</main>
+
+<!-- ===== Box de doação (jogo) ===== -->
+<div class="donate-card donate-card--compact" id="donateCompact">
+  <span class="donate-icon">☕</span>
+  <span class="donate-desc">Gostou? Apoie o CiêSenha</span>
+  <a href="https://livepix.gg/panoramaedu" target="_blank" rel="noopener" class="donate-btn donate-btn--sm">Apoiar</a>
+</div>
+
+<footer>
+  Feito com <b>ciência</b> · uma palavra por dia, por etapa ·
+  <button class="linkbtn" id="fProf">modo professor 🎓</button>
+  <div class="credits">
+    Desenvolvido por Gabriel Alves |
+    <a href="https://panoramaedu.onrender.com/" target="_blank" rel="noopener">Panorama Educação</a>
+  </div>
+</footer>
+</div>
+
+<!-- ficha do conceito -->
+<div class="overlay" id="mResult" role="dialog" aria-modal="true" aria-labelledby="rTitle">
+  <div class="modal">
+    <button class="mclose" data-close>✕</button>
+    <h2 id="rTitle">Experimento concluído!</h2>
+    <p id="rMeta"></p>
+    <div class="spec">
+      <div class="chips"><span class="chip accent" id="rChip"></span></div>
+      <h3 id="rWord"></h3>
+      <p class="desc" id="rDesc"></p>
+      <div class="fact"><b>💡 Você sabia?</b><span id="rFact"></span></div>
+    </div>
+    <div class="btnrow">
+      <button class="btn primary" id="bShare">📋 Compartilhar</button>
+      <button class="btn ghost" id="bNext">🎲 Nova palavra</button>
+    </div>
+  </div>
+</div>
+
+<!-- boas-vindas da atividade (não pode fechar sem começar) -->
+<div class="overlay locked" id="mName" role="dialog" aria-modal="true" aria-labelledby="nmTitle">
+  <div class="modal">
+    <h2>📚 <span id="nmTitle"></span></h2>
+    <p id="nmProf"></p>
+    <p>Você jogará as palavras <b>em sequência</b>. Ao final, poderá enviar seu relatório ao professor ou à professora.</p>
+    <input class="finput" id="nmNome" placeholder="Seu nome (opcional)" maxlength="40">
+    <div class="btnrow"><button class="btn primary" id="nmGo">Começar ▶</button></div>
+    <p style="text-align:center;margin-top:12px;margin-bottom:0"><button class="linkbtn" id="nmExit">sair da atividade</button></p>
+  </div>
+</div>
+
+<!-- relatório da atividade -->
+<div class="overlay" id="mReport" role="dialog" aria-modal="true" aria-labelledby="rpTitle">
+  <div class="modal">
+    <button class="mclose" data-close>✕</button>
+    <h2 id="rpTitle">Relatório <span>da atividade</span></h2>
+    <p>Envie para seu professor ou professora:</p>
+    <pre id="repText"></pre>
+    <div class="btnrow">
+      <button class="btn primary" id="repWa">📲 Enviar por WhatsApp</button>
+      <button class="btn ghost" id="repCopy">📋 Copiar</button>
+    </div>
+  </div>
+</div>
+
+<!-- modo professor -->
+<div class="overlay" id="mProf" role="dialog" aria-modal="true" aria-labelledby="pfTitle">
+  <div class="modal" style="max-width:560px">
+    <button class="mclose" data-close>✕</button>
+    <h2 id="pfTitle">Modo <span>Professor</span></h2>
+    <p>Crie uma atividade com suas próprias palavras. Os alunos recebem um link, jogam em sequência e devolvem o relatório — <b>sem cadastro e sem armazenar dados de alunos</b>.</p>
+    <input class="finput" id="pfTitulo" placeholder="Título da atividade * (ex.: Células — 8º ano B)" maxlength="60">
+    <input class="finput" id="pfProf" placeholder="Seu nome (aparece para os alunos)" maxlength="40">
+    <div id="pfList"></div>
+    <div class="btnrow">
+      <button class="btn ghost" id="pfAdd">+ Adicionar palavra</button>
+      <button class="btn primary" id="pfGen">Gerar link 🔗</button>
+    </div>
+    <div id="pfOut" hidden>
+      <p style="font-size:.8rem;color:var(--correct);margin-bottom:8px">✅ Link gerado! Envie para seus alunos:</p>
+      <textarea id="pfLink" readonly rows="3"></textarea>
+      <div class="btnrow">
+        <button class="btn primary" id="pfCopy">📋 Copiar link</button>
+        <button class="btn ghost" id="pfWa">📲 WhatsApp</button>
+      </div>
+    </div>
+    <div class="pf-sub">Minhas atividades salvas</div>
+    <div id="pfSavedList"></div>
+  </div>
+</div>
+
+<!-- estatísticas -->
+<div class="overlay" id="mStats" role="dialog" aria-modal="true" aria-labelledby="sTitle">
+  <div class="modal">
+    <button class="mclose" data-close>✕</button>
+    <h2 id="sTitle">Suas <span>estatísticas</span></h2>
+    <p style="font-size:.78rem">Valem para o desafio diário de todas as etapas — atividades de turma não contam. A sequência cresce com pelo menos uma vitória por dia.</p>
+    <div class="statsgrid">
+      <div class="stat"><b id="stP">0</b><span>Jogadas</span></div>
+      <div class="stat"><b id="stW">0</b><span>% vitórias</span></div>
+      <div class="stat"><b id="stS">0</b><span>Sequência</span></div>
+      <div class="stat"><b id="stB">0</b><span>Melhor</span></div>
+    </div>
+    <p style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px">Distribuição de tentativas</p>
+    <div class="dist" id="dist"></div>
+  </div>
+</div>
+
+<!-- ajuda -->
+<div class="overlay" id="mHelp" role="dialog" aria-modal="true" aria-labelledby="hTitle">
+  <div class="modal">
+    <button class="mclose" data-close>✕</button>
+    <h2 id="hTitle">Como <span>jogar</span></h2>
+    <p>Escolha sua <b>etapa de ensino</b> no topo — <b>Fund 1</b>, <b>Fund 2</b> ou <b>Médio</b>. Cada etapa tem sua própria palavra do dia, com conceitos na medida da série.</p>
+    <p>Decifre o <b>conceito científico</b> em poucas tentativas. A cada palpite, as letras mudam de cor:</p>
+    <div class="mtiles">
+      <span class="mtile correct">a</span><span class="mtile">t</span><span class="mtile">o</span><span class="mtile">m</span><span class="mtile">o</span>
+    </div>
+    <p style="font-size:.8rem"><b style="color:var(--correct)">Verde</b> = letra certa no lugar certo.</p>
+    <div class="mtiles">
+      <span class="mtile">f</span><span class="mtile present">o</span><span class="mtile">t</span><span class="mtile">a</span><span class="mtile">o</span>
+    </div>
+    <p style="font-size:.8rem"><b style="color:var(--present)">Âmbar</b> = a letra existe, mas em outra posição.</p>
+    <div class="mtiles">
+      <span class="mtile">g</span><span class="mtile">e</span><span class="mtile absent">n</span><span class="mtile">e</span>
+    </div>
+    <p style="font-size:.8rem"><b style="color:#7fa6b0">Cinza</b> = a letra não está na palavra.</p>
+    <div class="note">🔬 <b>Acentos não importam:</b> digite ATOMO e acertará ÁTOMO. O tamanho da palavra muda conforme o conceito — e a explicação aparece ao final, acertando ou não.</div>
+    <div class="note">🎓 <b>Professores:</b> criem atividades com as próprias palavras no Modo Professor (botão no topo) e recebam os relatórios dos alunos.</div>
+    <div class="btnrow"><button class="btn primary" data-close>Entendi, vamos lá!</button></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

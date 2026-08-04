@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07171d">
+<meta name="description" content="CiêSenha — um Wordle de conceitos científicos para Fund 1, Fund 2 e Ensino Médio. Decifre a palavra do dia e aprenda a explicação do conceito.">
+<title>CiêSenha · o wordle da ciência</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Unbounded:wght@500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="ambient" aria-hidden="true">
+  <div class="glow g1"></div><div class="glow g2"></div>
+  <svg class="mol m1" viewBox="0 0 120 120"><line x1="20" y1="80" x2="60" y2="30"/><line x1="60" y1="30" x2="100" y2="70"/><circle cx="20" cy="80" r="7"/><circle cx="60" cy="30" r="9"/><circle cx="100" cy="70" r="6"/></svg>
+  <svg class="mol m2" viewBox="0 0 120 120"><line x1="30" y1="30" x2="90" y2="90"/><line x1="90" y1="90" x2="90" y2="30"/><circle cx="30" cy="30" r="8"/><circle cx="90" cy="90" r="7"/></svg>
+  <svg class="mol m3" viewBox="0 0 120 120"><line x1="20" y1="60" x2="60" y2="60"/><line x1="60" y1="60" x2="100" y2="30"/><line x1="60" y1="60" x2="90" y2="100"/><circle cx="20" cy="60" r="6"/><circle cx="60" cy="60" r="9"/><circle cx="100" cy="30" r="6"/><circle cx="90" cy="100" r="5"/></svg>
+  <span class="bub" style="left:8%;width:10px;height:10px;animation-duration:19s"></span>
+  <span class="bub" style="left:22%;width:6px;height:6px;animation-duration:26s;animation-delay:-9s"></span>
+  <span class="bub" style="left:55%;width:13px;height:13px;animation-duration:23s;animation-delay:-4s"></span>
+  <span class="bub" style="left:71%;width:7px;height:7px;animation-duration:30s;animation-delay:-16s"></span>
+  <span class="bub" style="left:88%;width:11px;height:11px;animation-duration:21s;animation-delay:-12s"></span>
+</div>
+
+<!-- ============ TELA INICIAL ============ -->
+<section id="welcomeScreen" class="on" aria-label="Escolha de etapa">
+  <div class="w-inner">
+    <div class="w-logo">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <g stroke="#58d5e0" stroke-width="1.6" fill="none" opacity=".9">
+          <ellipse cx="32" cy="32" rx="27" ry="11"/>
+          <ellipse cx="32" cy="32" rx="27" ry="11" transform="rotate(60 32 32)"/>
+          <ellipse cx="32" cy="32" rx="27" ry="11" transform="rotate(-60 32 32)"/>
+        </g>
+        <circle class="nuc" cx="32" cy="32" r="5.5" fill="#ffb454"/>
+        <g class="orb"><circle cx="59" cy="32" r="3" fill="#58d5e0"/></g>
+        <g class="orb orb2"><circle cx="32" cy="5" r="2.4" fill="#2fe6a6"/></g>
+      </svg>
+    </div>
+    <h1 class="w-title">Ciê<em>Senha</em></h1>
+    <p class="w-tag">o wordle da ciência</p>
+    <p class="w-sub">Escolha sua etapa de ensino para começar o experimento do dia</p>
+    <div class="stage-list">
+      <button type="button" class="stage-card" data-stage="fund1" style="--sc:#2fe6a6">
+        <span class="sc-badge">sua etapa</span>
+        <div class="sc-icon">🌱</div>
+        <div class="sc-body">
+          <div class="sc-top"><span class="sc-name">Fund 1</span><span class="sc-grade">1º ao 5º ano</span></div>
+          <div class="sc-desc">Ciência do cotidiano e da natureza</div>
+          <div class="sc-chips"><span>VULCÃO</span><span>PLANETA</span><span>CORAÇÃO</span></div>
+        </div>
+        <div class="sc-arrow">→</div>
+      </button>
+      <button type="button" class="stage-card" data-stage="fund2" style="--sc:#58d5e0">
+        <span class="sc-badge">sua etapa</span>
+        <div class="sc-icon">🔬</div>
+        <div class="sc-body">
+          <div class="sc-top"><span class="sc-name">Fund 2</span><span class="sc-grade">6º ao 9º ano</span></div>
+          <div class="sc-desc">Da célula ao sistema solar</div>
+          <div class="sc-chips"><span>ÁTOMO</span><span>CÉLULA</span><span>GRAVIDADE</span></div>
+        </div>
+        <div class="sc-arrow">→</div>
+      </button>
+      <button type="button" class="stage-card" data-stage="medio" style="--sc:#ffb454">
+        <span class="sc-badge">sua etapa</span>
+        <div class="sc-icon">🎓</div>
+        <div class="sc-body">
+          <div class="sc-top"><span class="sc-name">Médio</span><span class="sc-grade">Ensino Médio</span></div>
+          <div class="sc-desc">Química, física moderna e além</div>
+          <div class="sc-chips"><span>MITOCÔNDRIA</span><span>ISÓTOPO</span><span>EVOLUÇÃO</span></div>
+        </div>
+        <div class="sc-arrow">→</div>
+      </button>
+    </div>
+
+    <!-- ===== Box de doação (tela inicial) ===== -->
+    <div class="donate-card donate-card--full">
+      <div class="donate-icon">☕</div>
+      <div class="donate-body">
+        <p class="donate-title">Apoie o CiêSenha</p>
+        <p class="donate-desc">O CiêSenha é gratuito e sem anúncios. Se você usa com seus alunos, considere apoiar a manutenção da plataforma.</p>
+      </div>
+      <a href="https://livepix.gg/panoramaedu" target="_blank" rel="noopener" class="donate-btn">💚 Apoiar pelo LivePix</a>
+    </div>
+
+    <p class="w-foot">Uma palavra por dia, por etapa · explicações ao final de cada rodada<br>Professores: criem atividades no botão 🎓 dentro do jogo</p>
+
+    <div class="credits">
+      Desenvolvido por Gabriel Alves |
+      <a href="https://panoramaedu.onrender.com/" target="_blank" rel="noopener">Panorama Educação</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  /* ====== lógica mínima da tela inicial ====== */
+  const stage = localStorage.getItem('ciesenha.stage') || '';
+  if (stage) {
+    document.querySelectorAll('.stage-card').forEach(c => {
+      c.classList.toggle('current', c.dataset.stage === stage);
+    });
+  }
+  document.querySelectorAll('.stage-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.dataset.stage;
+      localStorage.setItem('ciesenha.stage', id);
+      window.location.href = 'game.html?stage=' + encodeURIComponent(id);
+    });
+  });
+</script>
+</body>
+</html>

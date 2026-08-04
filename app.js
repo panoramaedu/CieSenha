@@ -4,7 +4,27 @@
    ================================================================ */
 
 let STAGES=[];
-const CAT_EMOJI={"Física":"⚛️","Química":"🧪","Biologia":"🧬","Astronomia":"🔭","Geologia":"🌋","Saúde":"💉","Paleontologia":"🦕"};
+const CAT_EMOJI={
+  "Física":"⚛️",
+  "Química":"🧪",
+  "Biologia":"🧬",
+  "Astronomia":"🔭",
+  "Geologia":"🌋",
+  "Saúde":"💉",
+  "Paleontologia":"🦕",
+  "Corpo Humano":"🧠",
+  "Animais":"🐾",
+  "Alimentos":"🍎",
+  "Plantas":"🌱",
+  "Natureza":"🌦️",
+  "Sentidos":"👁️",
+  "Cores":"🎨",
+  "Cotidiano":"🏠",
+  "Transporte":"🚗",
+  "Música":"🎵",
+  "Esporte":"⚽",
+  "Sentimentos":"❤️"
+};
 
 async function loadWords(){
   const res=await fetch('words.json');
@@ -334,7 +354,7 @@ function startFree(){
 }
 
 /* ================= atividades (Modo Professor) ================= */
-function activityLink(a){return location.href.split('#')[0].split('?')[0]+'#atividade='+toB64u(JSON.stringify(a));}
+function activityLink(a){return location.href.split('#')[0]+'#atividade='+toB64u(JSON.stringify(a));}
 function actHash(){return toB64u(JSON.stringify({t:actData.t,w:actData.w.map(x=>x.w)})).slice(0,32);}
 
 function parseActivity(){
@@ -369,7 +389,7 @@ function startActivity(a){
 function saveActProgress(){
   try{localStorage.setItem(ACT_SAVE,JSON.stringify({h:actHash(),r:actResults}));}catch(e){}
 }
-function exitAct(){location.hash='';location.href='index.html';}
+function exitAct(){location.hash='';location.reload();}
 $('nmExit').onclick=exitAct;
 $('nmGo').onclick=()=>{
   localStorage.setItem(NOME_KEY,$('nmNome').value.trim().slice(0,40));
